@@ -27,7 +27,7 @@ const backToLogin = () => {
     <el-card class="card">
       <template #header>
         <div class="card-header">
-          <div>注册</div>
+          <div>REGISTER</div>
         </div>
       </template>
       <el-form :model="form" ref="ruleFormRef">
@@ -45,13 +45,12 @@ const backToLogin = () => {
         </el-form-item>
         <el-form-item>
           <div class="card-button">
-            <el-button style="width: 100%;height: 40px;" type="primary" round
-              @click="onSubmit(ruleFormRef)">提交</el-button>
+            <el-button class="button" round @click="onSubmit(ruleFormRef)">提交</el-button>
           </div>
         </el-form-item>
         <el-form-item>
           <div class="back">
-            <el-link type="warning" :underline="false" @click="backToLogin()">已有账号，返回登录</el-link>
+            <el-link type="info" :underline="false" @click="backToLogin()">已有账号，返回登录</el-link>
           </div>
         </el-form-item>
       </el-form>
@@ -68,35 +67,50 @@ const backToLogin = () => {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vw;
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .card {
-  width: 400px
+  width: 400px;
+  /* ✅ 半透明效果（推荐 rgba + blur） */
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  /* 模糊背景形成磨砂玻璃效果 */
+  -webkit-backdrop-filter: blur(10px);
+  /* Safari 兼容 */
+
+  /* ✅ 柔和边框（白色微亮 + 半透明） */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  /* ✅ 自然阴影（不生硬） */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25),
+    inset 0 0 10px rgba(255, 255, 255, 0.05);
+  text-align: center;
+  color: #fff;
+  /* 白色字体在深色背景下更清晰 */
 }
 
 .card-header {
   text-align: center;
   font-size: 20px;
   font-weight: bold;
-}
-
-.card-tips {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-
-  .left {
-    text-align: left;
-  }
-
-  .right {
-    text-align: right;
-  }
+  color: #000;
 }
 
 .card-button {
   width: 100%;
+
+  .button {
+    width: 100%;
+    height: 40px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+  }
 }
 
 .back {

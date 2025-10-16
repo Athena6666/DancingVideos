@@ -46,7 +46,7 @@ const backToLogin = () => {
 
         <el-form-item>
           <div class="card-button">
-            <el-button style="width: 100%;height: 40px;" type="primary" round @click="onSubmit()">提交</el-button>
+            <el-button class="button" round @click="onSubmit()">提交</el-button>
           </div>
         </el-form-item>
         <el-form-item>
@@ -68,16 +68,38 @@ const backToLogin = () => {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vw;
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .card {
-  width: 400px
+  width: 400px;
+  /* ✅ 半透明效果（推荐 rgba + blur） */
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  /* 模糊背景形成磨砂玻璃效果 */
+  -webkit-backdrop-filter: blur(10px);
+  /* Safari 兼容 */
+
+  /* ✅ 柔和边框（白色微亮 + 半透明） */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  /* ✅ 自然阴影（不生硬） */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25),
+    inset 0 0 10px rgba(255, 255, 255, 0.05);
+  text-align: center;
+  color: #fff;
+  /* 白色字体在深色背景下更清晰 */
 }
 
 .card-header {
   text-align: center;
   font-size: 20px;
   font-weight: bold;
+  color: #000;
 }
 
 .yanzhenma {
@@ -98,6 +120,14 @@ const backToLogin = () => {
 
 .card-button {
   width: 100%;
+
+  .button {
+    width: 100%;
+    height: 40px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+  }
 }
 
 .back {
