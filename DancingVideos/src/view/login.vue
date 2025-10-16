@@ -1,3 +1,44 @@
+<script lang="ts" setup>
+import { ref, reactive } from 'vue'
+import type { FormInstance, FormRules } from 'element-plus'
+import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const form = reactive({
+  username: '',
+  password: ''
+})
+
+const rules = reactive<FormRules>({
+  username: [{ required: true, message: "请输入用户名", trigger: 'blur' }],
+  password: [{ required: true, message: "请输入密码", trigger: 'blur' }]
+})
+
+const ruleFormRef = ref<FormInstance>()
+const onSubmit = async (ruleFormRef: FormInstance | undefined) => {
+  if (!ruleFormRef) return;
+  await ruleFormRef.validate(async (valid) => {
+    if (valid) {
+      ElMessage({
+        type: 'success',
+        message: "登录成功"
+      })
+    } else {
+      ElMessage({
+        type: 'warning',
+        message: "登录失败"
+      })
+    }
+  })
+}
+
+const goRegister = () => {
+  router.push('/register')
+}
+</script>
+
 <template>
   <div class="login">
     <el-card class="card">
@@ -6,17 +47,23 @@
           <div>登录</div>
         </div>
       </template>
-      <el-form>
-        <el-form-item>
-          <el-input placeholder="用户名"></el-input>
+      <el-form :model="form" :rules="rules" ref="ruleFormRef">
+        <el-form-item prop="username">
+          <el-input v-model="form.username" placeholder="用户名"></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-input placeholder="密码" type="password"></el-input>
+        <el-form-item prop="password">
+          <el-input v-model="form.password" placeholder="密码" type="password"></el-input>
         </el-form-item>
         <el-form-item>
           <div class="card-tips">
             <span class="left">忘记密码</span>
-            <span class="right">立即注册</span>
+            <el-link type="primary" :underline="false" @click="goRegister()">立即注册</el-link>
+          </div>
+        </el-form-item>
+        <el-form-item>
+          <div class="card-button">
+            <el-button style="width: 100%;height: 40px;" type="primary" round
+              @click="onSubmit(ruleFormRef)">提交</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -44,11 +91,7 @@
 
 </template>
 
-<script>
-export default {
 
-}
-</script>
 
 <style lang="scss" scoped>
 .login {
@@ -81,6 +124,10 @@ export default {
   .right {
     text-align: right;
   }
+}
+
+.card-button {
+  width: 100%;
 }
 
 .card-text {
