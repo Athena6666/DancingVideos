@@ -51,7 +51,7 @@ const backToLogin = () => {
         </el-form-item>
         <el-form-item>
           <div class="back">
-            <el-link type="primary" :underline="false" @click="backToLogin()">已有账号，返回登录</el-link>
+            <el-link type="warning" :underline="false" @click="backToLogin()">已有账号，返回登录</el-link>
           </div>
         </el-form-item>
       </el-form>

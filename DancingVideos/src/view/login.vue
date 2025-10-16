@@ -60,7 +60,7 @@ const goPassword = () => {
         </el-form-item>
         <el-form-item>
           <div class="card-tips">
-            <el-link type="info" :underline="false" @click="goPassword()">忘记密码</el-link>
+            <el-link type="warning" :underline="false" @click="goPassword()">忘记密码</el-link>
             <el-link type="primary" :underline="false" @click="goRegister()">立即注册</el-link>
           </div>
         </el-form-item>
@@ -134,6 +134,7 @@ const goPassword = () => {
 .card-text {
   text-align: center;
   font-size: small;
+  color: gray;
 }
 
 .card-icon {

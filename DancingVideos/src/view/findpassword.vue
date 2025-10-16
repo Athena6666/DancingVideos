@@ -10,6 +10,8 @@ const captcha = ref('')
 const onSubmit = () => {
 
 }
+const password1 = ref('')
+const password2 = ref('')
 
 const backToLogin = () => {
   router.push('/login')
@@ -34,6 +36,14 @@ const backToLogin = () => {
             <el-button class="button" type="warning">发送</el-button>
           </div>
         </el-form-item>
+
+        <!-- <el-form-item prop="password1">
+          <el-input v-model="password1" placeholder="新密码" type="password"></el-input>
+        </el-form-item>
+        <el-form-item prop="password2">
+          <el-input v-model="password2" placeholder="再次输入" type="password"></el-input>
+        </el-form-item> -->
+
         <el-form-item>
           <div class="card-button">
             <el-button style="width: 100%;height: 40px;" type="primary" round @click="onSubmit()">提交</el-button>
@@ -41,7 +51,7 @@ const backToLogin = () => {
         </el-form-item>
         <el-form-item>
           <div class="back">
-            <el-link type="primary" :underline="false" @click="backToLogin()">返回登录</el-link>
+            <el-link type="warning" :underline="false" @click="backToLogin()">返回登录</el-link>
           </div>
         </el-form-item>
       </el-form>
