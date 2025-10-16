@@ -37,6 +37,10 @@ const onSubmit = async (ruleFormRef: FormInstance | undefined) => {
 const goRegister = () => {
   router.push('/register')
 }
+
+const goPassword = () => {
+  router.push('/findpassword')
+}
 </script>
 
 <template>
@@ -56,7 +60,7 @@ const goRegister = () => {
         </el-form-item>
         <el-form-item>
           <div class="card-tips">
-            <span class="left">忘记密码</span>
+            <el-link type="info" :underline="false" @click="goPassword()">忘记密码</el-link>
             <el-link type="primary" :underline="false" @click="goRegister()">立即注册</el-link>
           </div>
         </el-form-item>
@@ -121,9 +125,6 @@ const goRegister = () => {
     text-align: left;
   }
 
-  .right {
-    text-align: right;
-  }
 }
 
 .card-button {

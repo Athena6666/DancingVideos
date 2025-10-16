@@ -5,14 +5,8 @@ import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
-const form = reactive({
-  username: '',
-  password1: '',
-  password2: '',
-  phonenumber: ''
-})
-
+const phonenumber = ref('')
+const captcha = ref('')
 const onSubmit = () => {
 
 }
@@ -27,31 +21,27 @@ const backToLogin = () => {
     <el-card class="card">
       <template #header>
         <div class="card-header">
-          <div>注册</div>
+          <div>找回密码</div>
         </div>
       </template>
-      <el-form :model="form" ref="ruleFormRef">
-        <el-form-item prop="username">
-          <el-input v-model="form.username" placeholder="用户名"></el-input>
-        </el-form-item>
-        <el-form-item prop="password1">
-          <el-input v-model="form.password1" placeholder="密码" type="password"></el-input>
-        </el-form-item>
-        <el-form-item prop="password2">
-          <el-input v-model="form.password2" placeholder="再次输入密码" type="password"></el-input>
-        </el-form-item>
+      <el-form>
         <el-form-item prop="phonenumber">
-          <el-input v-model="form.phonenumber" placeholder="手机号码"></el-input>
+          <el-input v-model="phonenumber" placeholder="手机号码"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <div class="yanzhenma">
+            <el-input class="input" v-model="captcha" placeholder="验证码"></el-input>
+            <el-button class="button" type="warning">发送</el-button>
+          </div>
         </el-form-item>
         <el-form-item>
           <div class="card-button">
-            <el-button style="width: 100%;height: 40px;" type="primary" round
-              @click="onSubmit(ruleFormRef)">提交</el-button>
+            <el-button style="width: 100%;height: 40px;" type="primary" round @click="onSubmit()">提交</el-button>
           </div>
         </el-form-item>
         <el-form-item>
           <div class="back">
-            <el-link type="primary" :underline="false" @click="backToLogin()">已有账号，返回登录</el-link>
+            <el-link type="primary" :underline="false" @click="backToLogin()">返回登录</el-link>
           </div>
         </el-form-item>
       </el-form>
@@ -80,18 +70,19 @@ const backToLogin = () => {
   font-weight: bold;
 }
 
-.card-tips {
+.yanzhenma {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   width: 100%;
 
-  .left {
+  .input {
     text-align: left;
+    width: 70%;
   }
 
-  .right {
+  .button {
     text-align: right;
+    width: 30%;
   }
 }
 
