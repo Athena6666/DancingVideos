@@ -48,7 +48,7 @@ const goPassword = () => {
     <el-card class="card">
       <template #header>
         <div class="card-header">
-          <div>登录</div>
+          <div style="color: #000;">LOGIN</div>
         </div>
       </template>
       <el-form :model="form" :rules="rules" ref="ruleFormRef">
@@ -60,13 +60,13 @@ const goPassword = () => {
         </el-form-item>
         <el-form-item>
           <div class="card-tips">
-            <el-link type="warning" :underline="false" @click="goPassword()">忘记密码</el-link>
-            <el-link type="primary" :underline="false" @click="goRegister()">立即注册</el-link>
+            <el-link type="info" :underline="false" @click="goPassword()">忘记密码</el-link>
+            <el-link type="warning" :underline="false" @click="goRegister()">立即注册</el-link>
           </div>
         </el-form-item>
         <el-form-item>
           <div class="card-button">
-            <el-button style="width: 100%;height: 40px;" type="primary" round
+            <el-button class="button" style="width: 100%;height: 40px;" round
               @click="onSubmit(ruleFormRef)">提交</el-button>
           </div>
         </el-form-item>
@@ -161,5 +161,13 @@ const goPassword = () => {
 .card-icon {
   text-align: center;
   padding-top: 10px;
+}
+
+.button {
+  width: 100%;
+  height: 40px;
+  background-color: #000;
+  color: #fff;
+  border: none;
 }
 </style>
