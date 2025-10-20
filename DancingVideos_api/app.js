@@ -1,11 +1,11 @@
 const express = require('express')
 const app = express()
 const port = 3000
+const routes = require('./routes')
 
-app.get('/', (req, res) => {
-  res.send('1111')
-})
+app.use(express.json()) // 解析 JSON 请求体
+app.use('/api', routes) // 所有以/api开头的请求都交给routes处理
 
 app.listen(port, () => {
-  console.log(`example app listening on port ${port}`)
+  console.log(`🚀 Server running at http://localhost:${port}`)
 })
