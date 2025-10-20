@@ -3,6 +3,7 @@ import { ref, reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { loginUser } from '../api/user'
 
 const router = useRouter()
 
@@ -17,21 +18,33 @@ const rules = reactive<FormRules>({
 })
 
 const ruleFormRef = ref<FormInstance>()
-const onSubmit = async (ruleFormRef: FormInstance | undefined) => {
-  if (!ruleFormRef) return;
-  await ruleFormRef.validate(async (valid) => {
-    if (valid) {
-      ElMessage({
-        type: 'success',
-        message: "登录成功"
-      })
-    } else {
-      ElMessage({
-        type: 'warning',
-        message: "登录失败"
-      })
-    }
-  })
+const onSubmit = async (form) => {
+  // if (!ruleFormRef) return;
+  // await ruleFormRef.validate(async (valid) => {
+  //   if (valid) {
+  //     ElMessage({
+  //       type: 'success',
+  //       message: "登录成功"
+  //     })
+  //   } else {
+  //     ElMessage({
+  //       type: 'warning',
+  //       message: "登录失败"
+  //     })
+  //   }
+  // })
+  try {
+    const res = await loginUser({
+      username: form.username,
+      password: form.password
+    })
+    // 登录成功可以保存用户信息（例如 token 或 userId）
+    localStorage.setItem('user', JSON.stringify(res.data.user))
+    router.push('/videos')
+  } catch (err) {
+    console.error('登录失败:', err)
+    alert('用户名或密码错误')
+  }
 }
 
 const goRegister = () => {
@@ -66,8 +79,7 @@ const goPassword = () => {
         </el-form-item>
         <el-form-item>
           <div class="card-button">
-            <el-button class="button" style="width: 100%;height: 40px;" round
-              @click="onSubmit(ruleFormRef)">提交</el-button>
+            <el-button class="button" style="width: 100%;height: 40px;" round @click="onSubmit(form)">提交</el-button>
           </div>
         </el-form-item>
       </el-form>

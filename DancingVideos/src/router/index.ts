@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import login from '../view/login.vue'
 import register from '../view/register.vue'
 import findpassword from '../view/findpassword.vue'
+import videos from '../view/videos.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -24,6 +25,11 @@ const router = createRouter({
       path: '/findpassword',
       name: 'findpassword',
       component: findpassword
+    },
+    {
+      path: '/videos',
+      name: 'videos',
+      component: videos
     }
   ]
 })

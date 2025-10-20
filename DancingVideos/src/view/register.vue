@@ -3,18 +3,32 @@ import { ref, reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { registerUser } from '../api/user'
+import axios from 'axios'
 
 const router = useRouter()
 
 const form = reactive({
   username: '',
-  password1: '',
-  password2: '',
-  phonenumber: ''
+  password: '',
+  phonenumber: '',
+  email: ''
 })
 
-const onSubmit = () => {
-
+const onSubmit = async (form) => {
+  try {
+    const res = await registerUser({
+      username: form.username,
+      password: form.password,
+      phone: form.phonenumber,
+      email: form.email
+    })
+    alert(res.data.message)
+    router.push('/login')
+  } catch (err) {
+    console.error('注册失败:', err)
+    alert('注册失败，请重试')
+  }
 }
 
 const backToLogin = () => {
@@ -34,18 +48,18 @@ const backToLogin = () => {
         <el-form-item prop="username">
           <el-input v-model="form.username" placeholder="用户名"></el-input>
         </el-form-item>
-        <el-form-item prop="password1">
-          <el-input v-model="form.password1" placeholder="密码" type="password"></el-input>
-        </el-form-item>
-        <el-form-item prop="password2">
-          <el-input v-model="form.password2" placeholder="再次输入密码" type="password"></el-input>
+        <el-form-item prop="password">
+          <el-input v-model="form.password" placeholder="密码" type="password"></el-input>
         </el-form-item>
         <el-form-item prop="phonenumber">
           <el-input v-model="form.phonenumber" placeholder="手机号码"></el-input>
         </el-form-item>
+        <el-form-item prop="email">
+          <el-input v-model="form.email" placeholder="邮箱"></el-input>
+        </el-form-item>
         <el-form-item>
           <div class="card-button">
-            <el-button class="button" round @click="onSubmit(ruleFormRef)">提交</el-button>
+            <el-button class="button" round @click="onSubmit(form)">提交</el-button>
           </div>
         </el-form-item>
         <el-form-item>

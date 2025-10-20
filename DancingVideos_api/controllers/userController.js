@@ -2,12 +2,13 @@ const db = require('../config/db')
 
 // 用户注册
 exports.register = async (req, res) => {
-  const { username, password, phone } = req.body
+  const { username, password, phone, email } = req.body
   try {
-    await db.query('INSERT INTO users (username, password, phone) VALUES (?, ?)', [
+    await db.query('INSERT INTO users (username, password, phone, email) VALUES (?, ?, ?, ?)', [
       username,
       password,
-      phone
+      phone,
+      email
     ])
     res.json({ message: '注册成功' })
   } catch (err) {
