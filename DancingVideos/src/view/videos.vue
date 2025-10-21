@@ -113,16 +113,8 @@ export default {
     }
   }
 
-
-
-  .layout-main {
-    background: yellow;
-    flex: 1;
-    /*自动撑满中间剩余空间*/
-  }
-
   .layout-aside {
-    width: 340px;
+    width: 355px;
     background-color: #fafafa;
     border-right: 1px solid #ddd;
     padding: 15px;
@@ -160,5 +152,11 @@ export default {
       }
     }
   }
+}
+
+.layout-main {
+
+  flex: 1;
+  /*自动撑满中间剩余空间*/
 }
 </style>
