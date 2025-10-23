@@ -55,16 +55,62 @@
             </div>
           </div>
         </el-aside>
-        <el-main class="layout-main">Main</el-main>
+
+        <el-main class="video-list">
+          <el-row :gutter="20">
+            <el-col v-for="video in videos" :key="video.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="4">
+              <div class="video-card">
+                <!-- 视频缩略图 -->
+                <div class="thunbnail">
+                  <img :src="video.thumbnail" alt="缩略图" />
+                </div>
+                <!-- 视频信息 -->
+                <div class="video-info">
+                  <div class="video-title">{{ video.title }}</div>
+                  <div class="video-tags">
+                    <el-tag type="success" size="small">{{ video.danceType }}</el-tag>
+                    <el-tag type="warning" size="small">{{ video.difficulty }}</el-tag>
+                    <el-tag type="info" size="small">{{ video.teacher }}</el-tag>
+                  </div>
+                </div>
+              </div>
+            </el-col>
+          </el-row>
+        </el-main>
       </el-container>
     </el-container>
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts" setup>
+import { ref } from 'vue'
 
-}
+const videos = ref([
+  {
+    id: 1,
+    title: 'Hiphop 基本功教学',
+    thumbnail: 'https://picsum.photos/300/170?random=1',
+    danceType: 'Hiphop',
+    difficulty: '初级',
+    teacher: '张老师'
+  },
+  {
+    id: 2,
+    title: 'Jazz 舞蹈进阶技巧',
+    thumbnail: 'https://picsum.photos/300/170?random=2',
+    danceType: 'Jazz',
+    difficulty: '中级',
+    teacher: '李老师'
+  },
+  {
+    id: 3,
+    title: 'Popping 教学',
+    thumbnail: 'https://picsum.photos/300/170?random=3',
+    danceType: 'Popping',
+    difficulty: '高级',
+    teacher: '王老师'
+  }
+])
 </script>
 
 <style lang="scss" scoped>
@@ -154,9 +200,55 @@ export default {
   }
 }
 
-.layout-main {
+.video-list {
+  display: flex;
+  padding: 20px;
+}
 
-  flex: 1;
-  /*自动撑满中间剩余空间*/
+.video-card {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  /* 让卡片高度自适应 */
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .thumbnail {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+}
+
+.video-info {
+  padding: 10px 12px;
+
+  .video-title {
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .video-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
 }
 </style>
