@@ -79,6 +79,29 @@
         </el-main>
       </el-container>
     </el-container>
+    <!-- 悬浮上传按钮 -->
+    <div class="upload-float-btn" @click="dialogVisible = true">
+      <el-icon size="40">
+        <svg t="1761312199133" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          p-id="34467" width="64" height="64">
+          <path
+            d="M551.384615 539.293538V945.230769h-78.76923V539.293538l-107.618462 76.87877-45.784615-64.098462L512 414.365538l192.787692 137.708308-45.784615 64.098462L551.384615 539.293538zM945.230769 551.384615c0 108.760615-88.162462 196.923077-196.923077 196.923077h-118.153846v-78.76923h118.153846a118.153846 118.153846 0 1 0 14.198154-235.460924l-37.632-4.489846 3.032616-37.769846c0.472615-5.848615 0.708923-11.736615 0.708923-17.664 0-119.630769-96.984615-216.615385-216.615385-216.615384a216.694154 216.694154 0 0 0-212.204308 172.898461l-4.804923 23.453539-23.04 6.537846A157.538462 157.538462 0 0 0 315.076923 669.538462h78.769231v78.76923h-78.769231C184.576 748.307692 78.769231 642.500923 78.769231 512c0-98.304 60.553846-184.694154 149.366154-219.805538A295.522462 295.522462 0 0 1 512 78.769231c159.547077 0 289.536 126.483692 295.187692 284.652307A197.021538 197.021538 0 0 1 945.230769 551.384615z"
+            fill="#ffffff" p-id="34468"></path>
+        </svg>
+      </el-icon>
+    </div>
+
+    <el-dialog v-model="dialogVisible" title="上传视频" width="500" align-center>
+      <span>Open the dialog from the center from the screen</span>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="centerDialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="centerDialogVisible = false">
+            Confirm
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -87,7 +110,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
+const dialogVisible = ref(false)
 const videos = ref([
   {
     id: 1,
@@ -257,5 +280,46 @@ const detail = () => {
     gap: 6px;
     flex-wrap: wrap;
   }
+}
+
+.upload-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1000;
+
+  .el-button {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+  }
+}
+
+/* 悬浮按钮样式 */
+.upload-float-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  background-color: #409eff;
+  color: white;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s;
+}
+
+.upload-float-btn:hover {
+  background-color: #66b1ff;
+  transform: scale(1.1);
 }
 </style>
