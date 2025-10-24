@@ -59,7 +59,7 @@
         <el-main class="video-list">
           <el-row :gutter="20">
             <el-col v-for="video in videos" :key="video.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="4">
-              <div class="video-card">
+              <div class="video-card" @click="detail()">
                 <!-- 视频缩略图 -->
                 <div class="thunbnail">
                   <img :src="video.thumbnail" alt="缩略图" />
@@ -84,6 +84,9 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const videos = ref([
   {
@@ -111,6 +114,10 @@ const videos = ref([
     teacher: '王老师'
   }
 ])
+
+const detail = () => {
+  router.push('/videodetail')
+}
 </script>
 
 <style lang="scss" scoped>
