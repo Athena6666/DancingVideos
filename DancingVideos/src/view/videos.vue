@@ -128,7 +128,7 @@
         <div class="right-info">
           <el-input :rows="5" type="textarea" placeholder="描述......">
           </el-input>
-          <el-button type="info">提交</el-button>
+          <el-button type="info" @click="dialogVisible = false">提交</el-button>
         </div>
       </div>
       <!-- <template #footer>
