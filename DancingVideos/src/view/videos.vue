@@ -91,16 +91,54 @@
       </el-icon>
     </div>
 
-    <el-dialog v-model="dialogVisible" title="上传视频" width="500" align-center>
-      <span>Open the dialog from the center from the screen</span>
-      <template #footer>
+    <el-dialog v-model="dialogVisible" title="上传视频" width="600" align-center>
+      <div>
+        <el-upload class="upload-demo" drag action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+          multiple>
+          <svg t="1761573717751" class="icon" viewBox="0 0 1264 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            p-id="34774" width="64" height="64">
+            <path
+              d="M992.171444 312.62966C975.189616 137.155482 827.415189 0 647.529412 0 469.849434 0 323.616239 133.860922 303.679205 306.210218 131.598564 333.839271 0 482.688318 0 662.588235c0 199.596576 161.815189 361.411765 361.411765 361.411765h184.014581V692.705882H294.530793l337.939795-361.411764 337.939796 361.411764H726.132229v331.294118H933.647059v-1.555371c185.470975-15.299199 331.294118-170.426291 331.294117-359.856394 0-168.969898-116.101408-310.367302-272.769732-349.958575z"
+              p-id="34775" fill="#8a8a8a"></path>
+          </svg>
+          <div class="el-upload__text">
+            选择需要上传的视频 <em>或者拖到这儿</em>
+          </div>
+        </el-upload>
+      </div>
+      <div class="upload-info">
+        <div class="left-info">
+          <div class="info-input">
+            <div style="width: 50px;">歌名</div>
+            <el-input></el-input>
+          </div>
+          <div class="info-input">
+            <div style="width: 50px;">舞种</div>
+            <el-select></el-select>
+          </div>
+          <div class="info-input">
+            <div style="width: 50px;">难度</div>
+            <el-select></el-select>
+          </div>
+          <div class="info-input">
+            <div style="width: 50px;">老师</div>
+            <el-select></el-select>
+          </div>
+        </div>
+        <div class="right-info">
+          <el-input :rows="5" type="textarea" placeholder="描述......">
+          </el-input>
+          <el-button type="info">提交</el-button>
+        </div>
+      </div>
+      <!-- <template #footer>
         <div class="dialog-footer">
           <el-button @click="centerDialogVisible = false">Cancel</el-button>
           <el-button type="primary" @click="centerDialogVisible = false">
             Confirm
           </el-button>
         </div>
-      </template>
+      </template> -->
     </el-dialog>
   </div>
 </template>
@@ -321,5 +359,32 @@ const detail = () => {
 .upload-float-btn:hover {
   background-color: #66b1ff;
   transform: scale(1.1);
+}
+
+.upload-info {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+
+  .left-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 50%;
+
+    .info-input {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .right-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 50%;
+  }
 }
 </style>
