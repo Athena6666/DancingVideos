@@ -146,24 +146,30 @@
           </div>
           <div class="info-input">
             <div style="width: 50px;">舞种</div>
-            <el-select>
-              <el-option>jazz</el-option>
-              <el-option>hiphop</el-option>
+            <el-select v-model="videoInfo.danceType">
+              <el-option label="jazz" value="jazz">jazz</el-option>
+              <el-option label="hiphop" value="hiphop">hiphop</el-option>
             </el-select>
           </div>
           <div class="info-input">
             <div style="width: 50px;">难度</div>
-            <el-select></el-select>
+            <el-select v-model="videoInfo.difficulty">
+              <el-option label="初级" value="初级">初级</el-option>
+              <el-option label="中级" value="中级">中级</el-option>
+            </el-select>
           </div>
           <div class="info-input">
             <div style="width: 50px;">老师</div>
-            <el-select></el-select>
+            <el-select v-model="videoInfo.teacher_name">
+              <el-option label="xx" value="xx">xx</el-option>
+              <el-option label="xxx" value="xxx">xxx</el-option>
+            </el-select>
           </div>
         </div>
         <div class="right-info">
-          <el-input :rows="5" type="textarea" placeholder="描述......">
+          <el-input :rows="5" type="textarea" placeholder="描述......" v-model="videoInfo.description">
           </el-input>
-          <el-button type="info" @click="dialogVisible = false">提交</el-button>
+          <el-button type="info" @click=uploadVideos(videoInfo)>提交</el-button>
         </div>
       </div>
 
@@ -185,7 +191,8 @@ const videoInfo = reactive({
   title: '',
   dance_style: '',
   difficulty: '',
-  teacher_name: ''
+  teacher_name: '',
+  description: ''
 })
 
 const handleRemove = (file: UploadFile) => {
@@ -226,6 +233,11 @@ const videos = ref([
     teacher: '王老师'
   }
 ])
+
+const uploadVideos = () => {
+  console.log(videoInfo, fileList)
+  dialogVisible.value = false
+}
 
 const detail = () => {
   router.push('/videodetail')
