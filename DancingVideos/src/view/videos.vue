@@ -93,28 +93,63 @@
 
     <el-dialog v-model="dialogVisible" title="上传视频" width="600" align-center>
       <div>
-        <el-upload class="upload-demo" drag action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-          multiple>
-          <svg t="1761573717751" class="icon" viewBox="0 0 1264 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-            p-id="34774" width="64" height="64">
+        <!-- 上传视频 -->
+        <el-upload v-model:file-list="fileList" action="#" list-type="picture-card" :auto-upload="false" accept
+          :on-remove="handleRemove" :on-preview="handlePictureCardPreview">
+          <svg t="1761656708207" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            p-id="39437" width="48" height="48">
             <path
-              d="M992.171444 312.62966C975.189616 137.155482 827.415189 0 647.529412 0 469.849434 0 323.616239 133.860922 303.679205 306.210218 131.598564 333.839271 0 482.688318 0 662.588235c0 199.596576 161.815189 361.411765 361.411765 361.411765h184.014581V692.705882H294.530793l337.939795-361.411764 337.939796 361.411764H726.132229v331.294118H933.647059v-1.555371c185.470975-15.299199 331.294118-170.426291 331.294117-359.856394 0-168.969898-116.101408-310.367302-272.769732-349.958575z"
-              p-id="34775" fill="#8a8a8a"></path>
+              d="M465.454545 465.454545V139.636364a46.545455 46.545455 0 0 1 93.09091 0v325.818181h325.818181a46.545455 46.545455 0 0 1 0 93.09091H558.545455v325.818181a46.545455 46.545455 0 0 1-93.09091 0V558.545455H139.636364a46.545455 46.545455 0 0 1 0-93.09091z"
+              p-id="39438" fill="#bfbfbf"></path>
           </svg>
-          <div class="el-upload__text">
-            选择需要上传的视频 <em>或者拖到这儿</em>
-          </div>
+
+          <template #file="{ file }">
+            <div>
+              <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+              <span class="el-upload-list__item-actions">
+                <!-- 预览icon -->
+                <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
+                  <svg t="1761656883229" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="40611" width="32" height="32">
+                    <path
+                      d="M468.48 940.8a463.36 463.36 0 1 1 463.36-463.36 463.36 463.36 0 0 1-463.36 463.36z m0-862.72a399.36 399.36 0 1 0 399.36 399.36 400 400 0 0 0-399.36-399.36z"
+                      fill="#ffffff" p-id="40612"></path>
+                    <path
+                      d="M167.68 487.04a32 32 0 0 1-32-32 320 320 0 0 1 320-320 32 32 0 0 1 0 64 256 256 0 0 0-256 256 32 32 0 0 1-32 32zM986.88 1016.32a34.56 34.56 0 0 1-22.4-8.96l-120.32-120.96a31.36 31.36 0 1 1 44.8-44.8L1009.92 960a32.64 32.64 0 0 1 0 45.44 34.56 34.56 0 0 1-23.04 10.88z"
+                      fill="#ffffff" p-id="40613"></path>
+                  </svg>
+                </span>
+                <!-- 删除 icon-->
+                <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
+                  <svg t="1761656939017" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="41790" width="32" height="32">
+                    <path
+                      d="M799.2 874.4c0 34.4-28.001 62.4-62.4 62.4H287.2c-34.4 0-62.4-28-62.4-62.4V212h574.4v662.4zM349.6 100c0-7.2 5.6-12.8 12.8-12.8h300c7.2 0 12.8 5.6 12.8 12.8v37.6H349.6V100z m636.8 37.6H749.6V100c0-48.001-39.2-87.2-87.2-87.2h-300c-48 0-87.2 39.199-87.2 87.2v37.6H37.6C16.8 137.6 0 154.4 0 175.2s16.8 37.6 37.6 37.6h112v661.6c0 76 61.6 137.6 137.6 137.6h449.6c76 0 137.6-61.6 137.6-137.6V212h112c20.8 0 37.6-16.8 37.6-37.6s-16.8-36.8-37.6-36.8zM512 824c20.8 0 37.6-16.8 37.6-37.6v-400c0-20.8-16.8-37.6-37.6-37.6s-37.6 16.8-37.6 37.6v400c0 20.8 16.8 37.6 37.6 37.6m-175.2 0c20.8 0 37.6-16.8 37.6-37.6v-400c0-20.8-16.8-37.6-37.6-37.6s-37.6 16.8-37.6 37.6v400c0.8 20.8 17.6 37.6 37.6 37.6m350.4 0c20.8 0 37.6-16.8 37.6-37.6v-400c0-20.8-16.8-37.6-37.6-37.6s-37.6 16.8-37.6 37.6v400c0 20.8 16.8 37.6 37.6 37.6"
+                      fill="#ffffff" p-id="41791"></path>
+                  </svg>
+                </span>
+              </span>
+            </div>
+          </template>
         </el-upload>
+
+        <el-dialog v-model="videoDialogVisible">
+          <img style="width: 50%;" :src="dialogImageUrl" alt="Preview Image" />
+        </el-dialog>
+
       </div>
       <div class="upload-info">
         <div class="left-info">
           <div class="info-input">
             <div style="width: 50px;">歌名</div>
-            <el-input></el-input>
+            <el-input v-model="videoInfo.title"></el-input>
           </div>
           <div class="info-input">
             <div style="width: 50px;">舞种</div>
-            <el-select></el-select>
+            <el-select>
+              <el-option>jazz</el-option>
+              <el-option>hiphop</el-option>
+            </el-select>
           </div>
           <div class="info-input">
             <div style="width: 50px;">难度</div>
@@ -131,21 +166,37 @@
           <el-button type="info" @click="dialogVisible = false">提交</el-button>
         </div>
       </div>
-      <!-- <template #footer>
-        <div class="dialog-footer">
-          <el-button @click="centerDialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="centerDialogVisible = false">
-            Confirm
-          </el-button>
-        </div>
-      </template> -->
+
     </el-dialog>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
+
+import type { UploadFile } from 'element-plus'
+
+const fileList = ref<UploadFile[]>([])
+const dialogImageUrl = ref('')
+const videoDialogVisible = ref(false)
+const disabled = ref(false)
+const videoInfo = reactive({
+  title: '',
+  dance_style: '',
+  difficulty: '',
+  teacher_name: ''
+})
+
+const handleRemove = (file: UploadFile) => {
+  fileList.value = fileList.value.filter(f => f.uid !== file.uid)
+  console.log('已删除文件', file.name)
+}
+
+const handlePictureCardPreview = (file: UploadFile) => {
+  dialogImageUrl.value = file.url!
+  videoDialogVisible.value = true
+}
 
 const router = useRouter()
 const dialogVisible = ref(false)
@@ -366,6 +417,7 @@ const detail = () => {
   flex-direction: row;
   gap: 20px;
   width: 100%;
+  margin-top: 10px;
 
   .left-info {
     display: flex;
