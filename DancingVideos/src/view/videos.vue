@@ -92,10 +92,10 @@
     </div>
 
     <el-dialog v-model="dialogVisible" title="上传视频" width="600" align-center>
-      <div>
-        <!-- 上传视频 -->
+      <!-- <div class="video-preview">
+        
         <el-upload v-model:file-list="fileList" action="#" list-type="picture-card" :auto-upload="false" accept
-          :on-remove="handleRemove" :on-preview="handlePictureCardPreview">
+          :on-remove="handleRemove" :on-preview="handlePictureCardPreview" :on-change="handleChange">
           <svg t="1761656708207" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
             p-id="39437" width="48" height="48">
             <path
@@ -105,21 +105,9 @@
 
           <template #file="{ file }">
             <div>
-              <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+              <video v-if="file.url" :src="file.url" controls width="200" height="120"></video>
               <span class="el-upload-list__item-actions">
-                <!-- 预览icon -->
-                <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
-                  <svg t="1761656883229" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                    xmlns="http://www.w3.org/2000/svg" p-id="40611" width="32" height="32">
-                    <path
-                      d="M468.48 940.8a463.36 463.36 0 1 1 463.36-463.36 463.36 463.36 0 0 1-463.36 463.36z m0-862.72a399.36 399.36 0 1 0 399.36 399.36 400 400 0 0 0-399.36-399.36z"
-                      fill="#ffffff" p-id="40612"></path>
-                    <path
-                      d="M167.68 487.04a32 32 0 0 1-32-32 320 320 0 0 1 320-320 32 32 0 0 1 0 64 256 256 0 0 0-256 256 32 32 0 0 1-32 32zM986.88 1016.32a34.56 34.56 0 0 1-22.4-8.96l-120.32-120.96a31.36 31.36 0 1 1 44.8-44.8L1009.92 960a32.64 32.64 0 0 1 0 45.44 34.56 34.56 0 0 1-23.04 10.88z"
-                      fill="#ffffff" p-id="40613"></path>
-                  </svg>
-                </span>
-                <!-- 删除 icon-->
+              
                 <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
                   <svg t="1761656939017" class="icon" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" p-id="41790" width="32" height="32">
@@ -131,36 +119,50 @@
               </span>
             </div>
           </template>
-        </el-upload>
+</el-upload>
 
-        <el-dialog v-model="videoDialogVisible">
-          <img style="width: 50%;" :src="dialogImageUrl" alt="Preview Image" />
-        </el-dialog>
+<el-dialog v-model="videoDialogVisible">
+  <img style="width: 50%;" :src="dialogImageUrl" alt="Preview Image" />
+</el-dialog>
 
-      </div>
+</div> -->
       <div class="upload-info">
         <div class="left-info">
           <div class="info-input">
             <div style="width: 50px;">歌名</div>
-            <el-input v-model="videoInfo.title"></el-input>
+            <el-input placeholder="请输入歌名" v-model="videoInfo.title"></el-input>
+          </div>
+          <div class="info-input">
+            <div style="width: 50px;">舞室</div>
+            <el-select placeholder="请选择" v-model="videoInfo.danceclub">
+              <el-option label="xx" value="xx">xx</el-option>
+              <el-option label="xxx" value="xxx">xxx</el-option>
+            </el-select>
           </div>
           <div class="info-input">
             <div style="width: 50px;">舞种</div>
-            <el-select v-model="videoInfo.danceType">
+            <el-select placeholder="请选择" v-model="videoInfo.dance_style">
               <el-option label="jazz" value="jazz">jazz</el-option>
               <el-option label="hiphop" value="hiphop">hiphop</el-option>
             </el-select>
           </div>
           <div class="info-input">
             <div style="width: 50px;">难度</div>
-            <el-select v-model="videoInfo.difficulty">
+            <el-select placeholder="请选择" v-model="videoInfo.difficulty">
               <el-option label="初级" value="初级">初级</el-option>
               <el-option label="中级" value="中级">中级</el-option>
             </el-select>
           </div>
           <div class="info-input">
             <div style="width: 50px;">老师</div>
-            <el-select v-model="videoInfo.teacher_name">
+            <el-select placeholder="请选择" v-model="videoInfo.teacher_name">
+              <el-option label="xx" value="xx">xx</el-option>
+              <el-option label="xxx" value="xxx">xxx</el-option>
+            </el-select>
+          </div>
+          <div class="info-input">
+            <div style="width: 50px;">时长</div>
+            <el-select placeholder="请选择" v-model="videoInfo.time">
               <el-option label="xx" value="xx">xx</el-option>
               <el-option label="xxx" value="xxx">xxx</el-option>
             </el-select>
@@ -181,29 +183,35 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import type { UploadFile } from 'element-plus'
+import type { UploadFile, UploadRawFile } from 'element-plus'
 
 const fileList = ref<UploadFile[]>([])
 const dialogImageUrl = ref('')
-const videoDialogVisible = ref(false)
+// const videoDialogVisible = ref(false)
 const disabled = ref(false)
 const videoInfo = reactive({
   title: '',
+  danceclub: '',
   dance_style: '',
   difficulty: '',
   teacher_name: '',
+  time: '',
   description: ''
 })
 
-const handleRemove = (file: UploadFile) => {
-  fileList.value = fileList.value.filter(f => f.uid !== file.uid)
-  console.log('已删除文件', file.name)
-}
+// 当文件改变时（选择后）
+// const handleChange = (uploadFile: UploadFile, uploadFiles: UploadFile[]) => {
+//   if (uploadFile.raw) {
+//     uploadFile.url = URL.createObjectURL(uploadFile.raw as UploadRawFile)
+//   }
+//   fileList.value = uploadFiles
+//   console.log('上传文件：', fileList.value)
+// }
 
-const handlePictureCardPreview = (file: UploadFile) => {
-  dialogImageUrl.value = file.url!
-  videoDialogVisible.value = true
-}
+// const handleRemove = (file: UploadFile) => {
+//   fileList.value = fileList.value.filter(f => f.uid !== file.uid)
+//   console.log('已删除文件', file.name)
+// }
 
 const router = useRouter()
 const dialogVisible = ref(false)
@@ -363,6 +371,11 @@ const detail = () => {
   }
 }
 
+.video-preview video {
+  border-radius: 8px;
+  object-fit: cover;
+}
+
 .video-info {
   padding: 10px 12px;
 
@@ -404,8 +417,8 @@ const detail = () => {
 /* 悬浮按钮样式 */
 .upload-float-btn {
   position: fixed;
-  bottom: 40px;
-  right: 40px;
+  bottom: 50px;
+  right: 50px;
   background-color: #409eff;
   color: white;
   border-radius: 50%;

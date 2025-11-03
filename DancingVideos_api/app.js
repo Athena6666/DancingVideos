@@ -6,7 +6,7 @@ const routes = require('./routes')
 
 // ✅ 启用 CORS
 app.use(cors({
-  origin: 'http://localhost:5174', // 允许的前端地址
+  origin: 'http://localhost:5173', // 允许的前端地址
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
