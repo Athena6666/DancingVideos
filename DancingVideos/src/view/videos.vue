@@ -169,7 +169,7 @@
           </div>
         </div>
         <div class="right-info">
-          <el-input :rows="5" type="textarea" placeholder="描述......" v-model="videoInfo.description">
+          <el-input :rows="9" type="textarea" placeholder="描述......" v-model="videoInfo.description">
           </el-input>
           <el-button type="info" @click=uploadVideos(videoInfo)>提交</el-button>
         </div>
