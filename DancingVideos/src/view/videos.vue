@@ -92,45 +92,14 @@
     </div>
 
     <el-dialog v-model="dialogVisible" title="上传视频" width="600" align-center>
-      <!-- <div class="video-preview">
-        
-        <el-upload v-model:file-list="fileList" action="#" list-type="picture-card" :auto-upload="false" accept
-          :on-remove="handleRemove" :on-preview="handlePictureCardPreview" :on-change="handleChange">
-          <svg t="1761656708207" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-            p-id="39437" width="48" height="48">
-            <path
-              d="M465.454545 465.454545V139.636364a46.545455 46.545455 0 0 1 93.09091 0v325.818181h325.818181a46.545455 46.545455 0 0 1 0 93.09091H558.545455v325.818181a46.545455 46.545455 0 0 1-93.09091 0V558.545455H139.636364a46.545455 46.545455 0 0 1 0-93.09091z"
-              p-id="39438" fill="#bfbfbf"></path>
-          </svg>
 
-          <template #file="{ file }">
-            <div>
-              <video v-if="file.url" :src="file.url" controls width="200" height="120"></video>
-              <span class="el-upload-list__item-actions">
-              
-                <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
-                  <svg t="1761656939017" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                    xmlns="http://www.w3.org/2000/svg" p-id="41790" width="32" height="32">
-                    <path
-                      d="M799.2 874.4c0 34.4-28.001 62.4-62.4 62.4H287.2c-34.4 0-62.4-28-62.4-62.4V212h574.4v662.4zM349.6 100c0-7.2 5.6-12.8 12.8-12.8h300c7.2 0 12.8 5.6 12.8 12.8v37.6H349.6V100z m636.8 37.6H749.6V100c0-48.001-39.2-87.2-87.2-87.2h-300c-48 0-87.2 39.199-87.2 87.2v37.6H37.6C16.8 137.6 0 154.4 0 175.2s16.8 37.6 37.6 37.6h112v661.6c0 76 61.6 137.6 137.6 137.6h449.6c76 0 137.6-61.6 137.6-137.6V212h112c20.8 0 37.6-16.8 37.6-37.6s-16.8-36.8-37.6-36.8zM512 824c20.8 0 37.6-16.8 37.6-37.6v-400c0-20.8-16.8-37.6-37.6-37.6s-37.6 16.8-37.6 37.6v400c0 20.8 16.8 37.6 37.6 37.6m-175.2 0c20.8 0 37.6-16.8 37.6-37.6v-400c0-20.8-16.8-37.6-37.6-37.6s-37.6 16.8-37.6 37.6v400c0.8 20.8 17.6 37.6 37.6 37.6m350.4 0c20.8 0 37.6-16.8 37.6-37.6v-400c0-20.8-16.8-37.6-37.6-37.6s-37.6 16.8-37.6 37.6v400c0 20.8 16.8 37.6 37.6 37.6"
-                      fill="#ffffff" p-id="41791"></path>
-                  </svg>
-                </span>
-              </span>
-            </div>
-          </template>
-</el-upload>
+      <el-upload></el-upload>
 
-<el-dialog v-model="videoDialogVisible">
-  <img style="width: 50%;" :src="dialogImageUrl" alt="Preview Image" />
-</el-dialog>
-
-</div> -->
       <div class="upload-info">
         <div class="left-info">
           <div class="info-input">
-            <div style="width: 50px;">歌名</div>
-            <el-input placeholder="请输入歌名" v-model="videoInfo.title"></el-input>
+            <div style="width: 50px;">标题</div>
+            <el-input placeholder="请输入标题" v-model="videoInfo.title"></el-input>
           </div>
           <div class="info-input">
             <div style="width: 50px;">舞室</div>
@@ -183,12 +152,10 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import type { UploadFile, UploadRawFile } from 'element-plus'
+import type { UploadFile } from 'element-plus'
 
 const fileList = ref<UploadFile[]>([])
-const dialogImageUrl = ref('')
-// const videoDialogVisible = ref(false)
-const disabled = ref(false)
+
 const videoInfo = reactive({
   title: '',
   danceclub: '',
@@ -198,20 +165,6 @@ const videoInfo = reactive({
   time: '',
   description: ''
 })
-
-// 当文件改变时（选择后）
-// const handleChange = (uploadFile: UploadFile, uploadFiles: UploadFile[]) => {
-//   if (uploadFile.raw) {
-//     uploadFile.url = URL.createObjectURL(uploadFile.raw as UploadRawFile)
-//   }
-//   fileList.value = uploadFiles
-//   console.log('上传文件：', fileList.value)
-// }
-
-// const handleRemove = (file: UploadFile) => {
-//   fileList.value = fileList.value.filter(f => f.uid !== file.uid)
-//   console.log('已删除文件', file.name)
-// }
 
 const router = useRouter()
 const dialogVisible = ref(false)
