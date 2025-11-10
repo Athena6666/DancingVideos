@@ -93,7 +93,12 @@
 
     <el-dialog v-model="dialogVisible" title="上传视频" width="600" align-center>
 
-      <el-upload></el-upload>
+      <el-upload class="upload-area" drag multiple action="http://localhost:3000/api/videos/upload" :auto-upload="false"
+        :file-list="fileList" :on-change="handleFileChange" :on-remove="handleRemove" :on-success="handleSuccess"
+        accept="video/*" ref="uploadRef">
+        <i class="el-icon-upload"></i>
+        <div class="el-upload-text">拖拽或点击选择多个视频</div>
+      </el-upload>
 
       <div class="upload-info">
         <div class="left-info">
@@ -124,7 +129,7 @@
           </div>
           <div class="info-input">
             <div style="width: 50px;">老师</div>
-            <el-select placeholder="请选择" v-model="videoInfo.teacher_name">
+            <el-select placeholder="请选择" v-model="videoInfo.teacher">
               <el-option label="xx" value="xx">xx</el-option>
               <el-option label="xxx" value="xxx">xxx</el-option>
             </el-select>
@@ -140,7 +145,7 @@
         <div class="right-info">
           <el-input :rows="9" type="textarea" placeholder="描述......" v-model="videoInfo.description">
           </el-input>
-          <el-button type="info" @click=uploadVideos(videoInfo)>提交</el-button>
+          <el-button type="info" @click="uploadVideos()">提交</el-button>
         </div>
       </div>
 
@@ -149,19 +154,18 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import type { UploadFile } from 'element-plus'
+const fileList = ref([])
 
-const fileList = ref<UploadFile[]>([])
-
-const videoInfo = reactive({
+const videoInfo = ref({
   title: '',
   danceclub: '',
   dance_style: '',
   difficulty: '',
-  teacher_name: '',
+  teacher: '',
   time: '',
   description: ''
 })
@@ -195,9 +199,48 @@ const videos = ref([
   }
 ])
 
-const uploadVideos = () => {
-  console.log(videoInfo, fileList)
-  dialogVisible.value = false
+//文件变化
+const handleFileChange = (file, fileList_) => {
+  fileList.value = fileList_
+}
+//删除文件
+const handleRemove = (file, fileList_) => {
+  fileList.value = fileList_
+}
+//上传成功
+const handleSuccess = (response, file, fileList_) => {
+  ElMessage.success("上传成功")
+  fileList.value = fileList_
+}
+const uploadVideos = async () => {
+  //使用formdata手动上传
+  const formData = new FormData()
+  formData.append('title', videoInfo.value.title)
+  formData.append('danceclub', videoInfo.value.danceclub)
+  formData.append('dance_style', videoInfo.value.dance_style)
+  formData.append('difficulty', videoInfo.value.difficulty)
+  formData.append('teacher', videoInfo.value.teacher)
+  formData.append('time', videoInfo.value.time)
+  formData.append('description', videoInfo.value.description)
+
+  fileList.value.forEach((file) => {
+    formData.append('videos', file.raw)
+  })
+
+  try {
+    const res = await fetch('http://localhost:3000/api/videos/upload', {
+      method: 'POST',
+      body: formData
+    })
+    if (!res.ok) throw new Error('上传失败')
+    ElMessage.success('所有视频上传成功')
+    dialogVisible.value = false
+    fileList.value = []
+  } catch (err) {
+    console.error(err)
+    ElMessage.error('上传出错，请稍后再试')
+  }
+
 }
 
 const detail = () => {
